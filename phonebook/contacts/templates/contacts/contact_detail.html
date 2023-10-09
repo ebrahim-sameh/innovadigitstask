@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contact Detail</title>
+</head>
+<body>
+    <h1>Contact Detail</h1>
+    <p><strong>Name:</strong> {{ contact.name }}</p>
+
+    <p><strong>Phone Numbers:</strong></p>
+    <ul>
+        {% for phone_number in contact.phone_numbers.all %}
+            <li>{{ phone_number.number }}</li>
+        {% empty %}
+            <li>No phone numbers available for this contact.</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'contacts:contact_list' %}"><button>Back to Contact List</button></a>
+</body>
+</html>

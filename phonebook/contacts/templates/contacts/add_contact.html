@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Contact</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        var phoneNumberFieldCount = {{ phone_numbers_formset.total_form_count }};
+
+        $("#add-phone-number").click(function() {
+            var phoneNumberField = '<div class="phone-number-form"><label for="id_phone_numbers_' + phoneNumberFieldCount + '-number">Phone Number:</label> <input type="text" name="phone_numbers-' + phoneNumberFieldCount + '-number" required><button class="remove-phone-number">Remove</button></div>';
+            $(".phone-number-formset").append(phoneNumberField);
+
+            $("#id_phone_numbers-TOTAL_FORMS").val(phoneNumberFieldCount + 1);
+            $("#id_phone_numbers-INITIAL_FORMS").val(phoneNumberFieldCount);
+            phoneNumberFieldCount++;
+        });
+
+        $(".phone-number-formset").on("click", ".remove-phone-number", function() {
+            $(this).parent().remove();
+
+            phoneNumberFieldCount--;
+            $("#id_phone_numbers-TOTAL_FORMS").val(phoneNumberFieldCount);
+            $("#id_phone_numbers-INITIAL_FORMS").val(phoneNumberFieldCount);
+        });
+    });
+</script>
+</head>
+<body>
+    <h1>Add Contact</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="{{ contact_form.name.id_for_label }}">Name:</label>
+        {{ contact_form.name }}
+        {{ phone_numbers_formset.management_form }}
+
+<div class="phone-number-formset">
+    <label>Phone Number:</label>
+    {% for form in phone_numbers_formset %}
+        <div class="phone-number-form">
+            {{ form.number }}
+        </div>
+    {% endfor %}
+</div>
+
+        <button type="button" id="add-phone-number">Add Phone Number</button>
+        <button type="submit">Save</button>
+    </form>
+</body>
+</html>
