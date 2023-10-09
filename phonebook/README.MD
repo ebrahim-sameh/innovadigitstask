@@ -10,8 +10,8 @@
 1. **Clone the Repository:**
 
    ```
-   git clone <repository-url>
-   cd <repository-directory>
+   git clone https://github.com/ebrahim-sameh/innovadigitstask
+   cd innovadigitstask
    ```
 
 2. **Build the Docker Image:**
